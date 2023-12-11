@@ -1,0 +1,57 @@
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.DocumentsContract;
+import android.util.Log;
+import androidx.annotation.NonNull;
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.plugin.common.BinaryMessenger;
+import io.flutter.plugin.common.MethodCall;
+import io.flutter.plugin.common.MethodChannel;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class csvfile implements FlutterPlugin {
+  // ... Existing code ...
+
+  @Override
+  public void onMethodCall(MethodCall call, final MethodChannel.Result result) {
+    switch (call.method) {
+      case "openSAFFilePicker":
+        openSAFFilePicker(result);
+        break;
+      case "saveFileToSAF":
+        saveFileToSAF(call, result);
+        break;
+      // ... Other method handlers ...
+    }
+  }
+
+  // ... Other methods ...
+
+  private void openSAFFilePicker(final MethodChannel.Result result) {
+    // Use an Android Intent to open the SAF file picker
+    Activity activity = pluginBinding.getApplicationContext();
+    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+    intent.addCategory(Intent.CATEGORY_OPENABLE);
+    intent.setType("*/*"); // You can specify the desired MIME type
+    activity.startActivityForResult(intent, FILE_PICKER_REQUEST_CODE);
+  }
+
+  private void saveFileToSAF(MethodCall call, final MethodChannel.Result result) {
+    String fileName = call.argument("fileName");
+    byte[] fileContent = call.argument("fileContent");
+
+    if (fileName != null && fileContent != null) {
+      // Use SAF to save the file
+      // For example, you can use DocumentFile to create and write to the file
+      // and return the file's URI in the result.
+    } else {
+      result.error("INVALID_ARGUMENTS", "Invalid arguments for saving file to SAF", null);
+    }
+  }
+}
