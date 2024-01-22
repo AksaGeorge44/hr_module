@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
-
 class JobPostingPage extends StatefulWidget {
   const JobPostingPage({super.key});
 
@@ -78,10 +75,6 @@ class _JobPostingPageState extends State<JobPostingPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      // Here, you can implement the logic to send the job details to your backend
-      // and handle the job posting process.
-
-      // For simplicity, we will just display the job details for now.
       showDialog(
         context: context,
         builder: (BuildContext context) {

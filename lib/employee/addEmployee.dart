@@ -13,6 +13,7 @@ class AddEmployee extends StatefulWidget {
 
 class _AddEmployeeState extends State<AddEmployee>
     with SingleTickerProviderStateMixin {
+
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   TextEditingController fullname = TextEditingController();
   TextEditingController address = TextEditingController();
@@ -146,21 +147,7 @@ class _AddEmployeeState extends State<AddEmployee>
     return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
   }
 
-  Future<void> _selectDateofHire(BuildContext context) async {
-    final DateTime currentDate = DateTime.now();
-    final DateTime? selectedDate = await showDatePicker(
-      context: context,
-      initialDate: currentDate,
-      firstDate: DateTime(currentDate.year - 50),
-      lastDate: currentDate,
-    );
 
-    if (selectedDate != null) {
-      setState(() {
-        doh.text = formatDate(selectedDate);
-      });
-    }
-  }
 
   Future<void> _selectDateofJoin(BuildContext context) async {
     final DateTime currentDate = DateTime.now();
@@ -650,6 +637,7 @@ class _AddEmployeeState extends State<AddEmployee>
                                         child: Text(gender),
                                       ))
                                   .toList(),
+
                           onSelected: (String value) {
                             setState(() {
                               _selectedGender = value;

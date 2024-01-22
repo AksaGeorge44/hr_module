@@ -10,6 +10,7 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
+
   User? _user;
 
   @override
@@ -17,6 +18,8 @@ class _MyDrawerState extends State<MyDrawer> {
     super.initState();
     _user = FirebaseAuth.instance.currentUser;
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -44,7 +47,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 SizedBox(height: 10),
                 Text(
                   _user?.displayName ?? '',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black),
                 ),
                 Text(
                   _user?.email ?? '',

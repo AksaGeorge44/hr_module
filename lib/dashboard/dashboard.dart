@@ -7,6 +7,8 @@ import 'package:hr_module/dashboard/help.dart';
 import 'package:hr_module/dashboard/widgets/integration.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
+import '../main.dart';
+import '../sample.dart';
 import '../user/login.dart';
 import 'widgets/dashbox.dart';
 import 'widgets/kpiWidget.dart';
@@ -27,37 +29,23 @@ class _DashboardState extends State<Dashboard> {
     const FlSpot(3, 7000),
   ];
 
-    Future<void> exportReport() async {
-    final pdf = pw.Document();
-    pdf.addPage(pw.Page(
-      build: (pw.Context context) {
-        return pw.Center(
-          child: pw.Text('Sample Report Content'),
-        );
-      },
-    ));
-
-    final directory = await getApplicationDocumentsDirectory();
-    final filePath = '${directory.path}/sample_report.pdf';
-    final file = File(filePath);
-
-    await file.writeAsBytes(await pdf.save());
-
-    shareReport(file.path);
-  }
-
-  void shareReport(String filePath) {
-    //Share.shareFiles([filePath], text: 'Share the report');
-  }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue.shade100,
         title: const Text('ERP Dashboard'),
         actions: [
-          const Icon(Icons.notification_important),
+          IconButton(
+            tooltip: "notifications",
+            onPressed: () {
+              showNotificationsDialog(context);
+            },
+            icon: const Icon(Icons.notification_important_outlined),
+          ),
+
           const SizedBox(width: 10,),
           IconButton(
             tooltip: "messages",
@@ -69,7 +57,7 @@ class _DashboardState extends State<Dashboard> {
           IconButton(
             tooltip: "share",
             onPressed: () {
-              exportReport();
+
             },
             icon: const Icon(Icons.share),
           ),
@@ -120,33 +108,58 @@ class _DashboardState extends State<Dashboard> {
               const SizedBox(height: 10,),
               const Row(
                 children: [
-                  Text('Welcome', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+                  Text('Hi Welcome!', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
                 ],),
+
               const SizedBox(height: 30,),
-              const Row(
-                //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  KPIWidget(
-                    label: 'Sales',
-                    value: '\₹10,500',
-                  ),
-                  KPIWidget(
-                    label: 'Revenue',
-                    value: '\₹15,750',
-                  ),
-                  KPIWidget(
-                    label: 'Expenses',
-                    value: '\₹5,250',
-                  ),
-                  KPIWidget(
-                    label: 'Production Efficiency',
-                    value: '85%',
-                  ),
-                  KPIWidget(
-                    label: 'Inventory Levels',
-                    value: '2,500 units',
-                  ),
-                ],
+              const SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    KPIWidget(
+                      label: 'Total Income',
+                      value: '₹1,10,500',
+                    ),
+                    KPIWidget(
+                      label: 'Total Expenses',
+                      value: '₹65,750',
+                    ),
+                    KPIWidget(
+                      label: 'Sales',
+                      value: '₹10,500',
+                    ),
+                    KPIWidget(
+                      label: 'Revenue',
+                      value: '₹15,750',
+                    ),
+                    KPIWidget(
+                      label: 'Assets',
+                      value: '₹55,250',
+                    ),
+
+                    KPIWidget(
+                      label: 'Production Efficiency',
+                      value: '85%',
+                    ),
+                    KPIWidget(
+                      label: 'Inventory Levels',
+                      value: '2,500 units',
+                    ),
+                    KPIWidget(
+                      label: 'Total Staff',
+                      value: '112',
+                    ),
+                    KPIWidget(
+                      label: 'Total Orders',
+                      value: '1,134',
+                    ),
+                    KPIWidget(
+                      label: 'Budget',
+                      value: '2,20,000',
+                    ),
+                  ],
+                ),
               ),
 
               Column(
@@ -157,14 +170,84 @@ class _DashboardState extends State<Dashboard> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
+                        SizedBox(height: 15,),
                         const Text(
-                          'Overview',
+                          'Sales Overview',
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         const SizedBox(height: 10),
+                        // SizedBox(
+                        //   height: 300,
+                        //   child: LineChart(
+                        //     LineChartData(
+                        //       gridData: FlGridData(show: false),
+                        //       borderData: FlBorderData(
+                        //         show: true,
+                        //         border: Border.all(
+                        //           color: const Color(0xff37434d),
+                        //           width: 1,
+                        //         ),
+                        //       ),
+                        //       titlesData: FlTitlesData(
+                        //         leftTitles: SideTitles(showTitles: true),
+                        //         bottomTitles: SideTitles(
+                        //           showTitles: true,
+                        //           getTitles: (value) {
+                        //             // Customize the x-axis labels as needed
+                        //             switch (value.toInt()) {
+                        //               case 1:
+                        //                 return 'Jan';
+                        //               case 2:
+                        //                 return 'Feb';
+                        //               case 3:
+                        //                 return 'Mar';
+                        //               case 4:
+                        //                 return 'Apr';
+                        //               case 5:
+                        //                 return 'May';
+                        //               case 6:
+                        //                 return 'Jun';
+                        //               case 7:
+                        //                 return 'Jul';
+                        //               default:
+                        //                 return '';
+                        //             }
+                        //           },
+                        //         ),
+                        //       ),
+                        //       lineBarsData: [
+                        //         LineChartBarData(
+                        //           spots: [
+                        //             FlSpot(0, 3),
+                        //             FlSpot(1, 1),
+                        //             FlSpot(2, 4),
+                        //             FlSpot(3, 3),
+                        //             FlSpot(4, 5),
+                        //             FlSpot(5, 2),
+                        //             FlSpot(6, 4),
+                        //           ],
+                        //           isCurved: true,
+                        //           colors: [Colors.blue],
+                        //           dotData: FlDotData(show: true),
+                        //           belowBarData: BarAreaData(show: false),
+                        //           // Add analytics inside the graph
+                        //           showingTooltipIndicators: [0, 1, 2, 3, 4, 5, 6]
+                        //               .map((index) {
+                        //             return FlLineTooltipIndicator(
+                        //               position: FlLineTooltipIndicatorPosition.top,
+                        //               tooltip: 'Sales: ${index + 1}',
+                        //               bgColor: Colors.blue,
+                        //               textColor: Colors.white,
+                        //             );
+                        //           }).toList(),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                         SizedBox(
                           height: 300,
                           child: LineChart(
@@ -208,8 +291,9 @@ class _DashboardState extends State<Dashboard> {
                   )
                 ],
               ),
-              
+
               CalendarWidget(),
+
               const IntegrationWidget(),
 
               const SizedBox(height: 20,),
@@ -261,7 +345,6 @@ class _DashboardState extends State<Dashboard> {
                 title: Text('New Message 2'),
                 subtitle: Text('This is the content of the second message.'),
               ),
-              // Add more new messages here as needed
             ],
           ),
           actions: <Widget>[
@@ -276,6 +359,41 @@ class _DashboardState extends State<Dashboard> {
       },
     );
   }
+
+  Future<void> showNotificationsDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('You have new notifications'),
+          content: const Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: Icon(Icons.notifications),
+                title: Text('New Notification 1'),
+                subtitle: Text('Event organized today.'),
+              ),
+              ListTile(
+                leading: Icon(Icons.message),
+                title: Text('New Notification 2'),
+                subtitle: Text('Client meeting.'),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
 
 void performLogout(BuildContext context) {

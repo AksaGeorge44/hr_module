@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,11 +14,13 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+
   final _formKey = GlobalKey<FormState>();
   bool isShowPassword = true;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController uname = TextEditingController();
+
 
   Future<void> registerUser() async {
     if (_formKey.currentState!.validate()) {
@@ -56,9 +59,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           password: password.text,
         );
 
-        // Send email verification
-        await userCredential.user!.sendEmailVerification();
-
         await FirebaseFirestore.instance
             .collection('registers')
             .doc(userCredential.user!.uid)
@@ -70,10 +70,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Successfully registered. Verification email sent.'),
+            content: Text('Successfully registered'),
           ),
         );
-
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -83,6 +82,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

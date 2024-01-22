@@ -11,6 +11,7 @@ class RoundPage extends StatefulWidget {
 }
 
 class _RoundPageState extends State<RoundPage> {
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -19,6 +20,8 @@ class _RoundPageState extends State<RoundPage> {
   bool _showDialog = false;
   List<String> _roundsList = [];
   String _round = 'Select Round';
+
+
 
   @override
   void initState() {
@@ -44,6 +47,10 @@ class _RoundPageState extends State<RoundPage> {
       }
     }
   }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,9 +74,7 @@ class _RoundPageState extends State<RoundPage> {
                         color: Color.fromARGB(255, 44, 159, 212),
                       ),
                     ),
-                    const SizedBox(
-                      height: 25,
-                    ),
+                    const SizedBox(height: 25,),
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: TextFormField(
@@ -196,6 +201,8 @@ class _RoundPageState extends State<RoundPage> {
     return formattedDate;
   }
 
+
+
   void _submitForm() async {
     final form = _formKey.currentState;
     if (form != null && form.validate()) {
@@ -207,7 +214,6 @@ class _RoundPageState extends State<RoundPage> {
         });
 
         _showDialog = true;
-
         if (_showDialog) {
           showDialog(
             context: context,
@@ -228,7 +234,6 @@ class _RoundPageState extends State<RoundPage> {
             },
           );
         }
-
         setState(() {});
       } catch (e) {
         if (kDebugMode) {
@@ -237,6 +242,10 @@ class _RoundPageState extends State<RoundPage> {
       }
     }
   }
+
+
+
+
 
   void clearForm() {
     round.clear();

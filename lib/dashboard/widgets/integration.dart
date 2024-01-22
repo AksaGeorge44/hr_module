@@ -35,8 +35,8 @@ class IntegrationWidget extends StatelessWidget {
   // Function to open the default email client
   _launchEmailClient() async {
     const url = 'mailto:support@example.com';
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrl(url as Uri)) {
+      await launchUrl(url as Uri);
     } else {
       throw 'Could not launch $url';
     }
@@ -48,8 +48,8 @@ class IntegrationWidget extends StatelessWidget {
       queryParameters: {'subject': 'Support Request'}, // Set an email subject.
     );
 
-    if (await canLaunch(emailLaunchUri.toString())) {
-      await launch(emailLaunchUri.toString());
+    if (await canLaunchUrl(emailLaunchUri.toString() as Uri)) {
+      await launchUrl(emailLaunchUri.toString() as Uri);
     } else {
       // Handle the case where the email client cannot be launched.
       showDialog(

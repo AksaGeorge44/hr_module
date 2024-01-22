@@ -1,14 +1,17 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:requestLegacyExternalStorage="true"
         android:label="hr_module"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:enableOnBackInvokedCallback="true"
+        tools:targetApi="tiramisu">
 
         <meta-data
         android:name="com.google.android.geo.API_KEY"
@@ -35,12 +38,16 @@
               />
 
             <intent-filter>
-                <data android:scheme="my.music.app" android:host="callback"/>
+                <data android:scheme="my.music.app"/>
+                <data android:host="callback"/>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <data android:host="localhost" android:port="8888"/>
+                <data android:scheme="http"/>
+                <data android:path="/callback"/>
                 <data android:scheme="myflutterapp" />
             </intent-filter>
         </activity>

@@ -51,8 +51,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
                     await user.updatePassword(newPasswordController.text);
 
                     await FirebaseFirestore.instance
-                        .collection('registers') // Adjust collection name
-                        .doc(user.uid) // Use the user's UID as the document ID
+                        .collection('registers')
+                        .doc(user.uid)
                         .update({'password': newPasswordController.text});
 
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -71,6 +71,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
               },
               child: Text('Update Password'),
             ),
+
           ],
         ),
       ),

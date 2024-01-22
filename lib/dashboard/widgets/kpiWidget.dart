@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class KPIWidget extends StatelessWidget {
+
   final String label;
   final String value;
 

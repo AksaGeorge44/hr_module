@@ -29,7 +29,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -92,6 +91,7 @@ class DisplayDataPage extends StatelessWidget {
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
                 var data = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+
                 return ListTile(
                   title: Text('Name: ${data['name']}'),
                   subtitle: Text('Password: ${data['password']}'),
@@ -103,8 +103,8 @@ class DisplayDataPage extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => EditDataPage(data: data, documentId: snapshot.data!.docs[index].id),
+                            MaterialPageRoute(builder: (context) =>
+                                EditDataPage(data: data, documentId: snapshot.data!.docs[index].id),
                             ),
                           );
                         },
@@ -136,14 +136,14 @@ class DisplayDataPage extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop();
               },
               child: Text("Cancel"),
             ),
             TextButton(
               onPressed: () {
                 _deleteItem(documentId,context);
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop();
               },
               child: Text("Delete"),
             ),
@@ -163,7 +163,6 @@ class DisplayDataPage extends StatelessWidget {
   }
 }
 
-// The rest of your EditDataPage and LoginPage code remains the same.
 
 
 class EditDataPage extends StatefulWidget {
@@ -189,6 +188,8 @@ class _EditDataPageState extends State<EditDataPage> {
     unameController = TextEditingController(text: widget.data['name']);
     passwordController = TextEditingController(text: widget.data['password']);
   }
+
+
 
   Future<void> updateDetails() async {
     try {

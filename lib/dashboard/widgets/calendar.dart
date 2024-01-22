@@ -10,6 +10,7 @@ class CalendarWidget extends StatefulWidget {
 }
 
 class _CalendarWidgetState extends State<CalendarWidget> {
+
   DateTime _selectedDay = DateTime.now();
   DateTime _selectedTime = DateTime.now();
   String _taskName = '';
@@ -22,19 +23,6 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       context: context,
       initialTime: TimeOfDay.fromDateTime(_selectedTime),
     );
-    if (pickedTime != null) {
-      setState(() {
-        _selectedTime = DateTime(
-          _selectedDay.year,
-          _selectedDay.month,
-          _selectedDay.day,
-          pickedTime.hour,
-          pickedTime.minute,
-        );
-        _selectedTimeText = pickedTime.format(context);
-      });
-    }
-
     if (pickedTime != null) {
       setState(() {
         _selectedTime = DateTime(
@@ -100,6 +88,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                   });
                 },
               ),
+
+
+
+
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class MyFonts {
+
   static TextStyle lato({required double fontSize, required FontWeight fontWeight, required Color color}) {
     return GoogleFonts.lato(
       fontSize: fontSize,
@@ -18,4 +19,5 @@ class MyFonts {
       color: color,
     );
   }
+
 }

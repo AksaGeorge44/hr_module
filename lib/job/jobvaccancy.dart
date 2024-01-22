@@ -11,7 +11,6 @@ class JobVacanciesSection extends StatefulWidget {
 }
 
 class _JobVacanciesSectionState extends State<JobVacanciesSection> {
-  // Simulated job vacancy data
 
 List<JobVacancy> jobVacancies = [];
 
@@ -64,14 +63,8 @@ List<JobVacancy> jobVacancies = [];
           
                   ],
                 ),
-                
-               
-          
-          
-          
+
                 const SizedBox(height: 16),
-          
-          
                 ElevatedButton(
                   onPressed: ()
                   {
@@ -120,17 +113,8 @@ List<JobVacancy> jobVacancies = [];
   }
 
 
-  Future<void> _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
 
   void _viewJobApplications(JobVacancy job) {
-    // Implement job application viewing logic here
-    // You can navigate to a new screen or display a dialog to manage applications
     showDialog(
       context: context,
       builder: (BuildContext context) {

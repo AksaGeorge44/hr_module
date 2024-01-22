@@ -21,17 +21,18 @@ class _HttpEgAppState extends State<HttpEgApp> {
 
   Future<List<Post>> fetchPosts() async {
     final response = await http.get(Uri.parse('https://reqres.in/api/users?page=2'));
-
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonResponse = json.decode(response.body);
       List<dynamic> data = jsonResponse['data'];
-
       List<Post> posts = data.map((item) => Post.fromJson(item)).toList();
       return posts;
     } else {
       throw Exception('Failed to load posts');
     }
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,61 +42,78 @@ class _HttpEgAppState extends State<HttpEgApp> {
         appBar: AppBar(
           title: Text('HTTP Example'),
         ),
-        body: Center(
-          child: Column(
-            children: [
-              Expanded(
-                child: FutureBuilder<List<Post>>(
-                  future: posts,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          Post post = snapshot.data![index];
+        body: Column(
+          children: [
+            Expanded(
+              child: FutureBuilder<List<Post>>(
+                future: posts,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        Post post = snapshot.data![index];
+                        
+                        return GridTile(child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                             height: 350,
+                            // width: 100,
+                            child: Column(
+                              children: [
+                                Row(
+                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(post.email),
+                                    //SizedBox(width: 20,),
+                                    Text(post.firstName),
+                                   // SizedBox(width: 20,),
 
-                          return ListTile(
-                            title: Text(post.email),
-                            subtitle: Text('${post.firstName} ${post.lastName}'),
-                            leading: CircleAvatar(
-                              backgroundImage: NetworkImage(post.avatar),
+                                    SizedBox(
+                                        height: 250,
+                                        child: Image.network(post.avatar,fit: BoxFit.cover,))
+                                  ],
+                                )
+                              ],
                             ),
-                            // Add more information as needed
-                          );
-                        },
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    }
-                    return const CircularProgressIndicator();
-                  },
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    final updatedPost = Post(
-                      lastName: 'george',
-                      id: 7,
-                      avatar: 'https://example.com/updated-avatar.jpg',
-                      firstName: 'aksa',
-                      email: 'aksa@example.com',
+                          ),
+                        ));
+
+                      },
                     );
-
-                    await updatePost(1, updatedPost);
-
-                    setState(() {
-                      posts = fetchPosts();
-                    });
-                  } catch (e) {
-                    print('Error updating post: $e');
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
                   }
+                  return const CircularProgressIndicator();
                 },
-                child: Text('Update'),
               ),
-            ],
-          ),
-        ),
+            ),
+            // Other widgets can be added below the ListView if needed
+            // ElevatedButton(
+            //   onPressed: () async {
+            //     try {
+            //       final updatedPost = Post(
+            //         lastName: 'george',
+            //         id: 7,
+            //         avatar: 'https://example.com/updated-avatar.jpg',
+            //         firstName: 'aksa',
+            //         email: 'aksa@example.com',
+            //       );
+            //
+            //       await updatePost(1, updatedPost);
+            //
+            //       setState(() {
+            //         posts = fetchPosts();
+            //       });
+            //     } catch (e) {
+            //       print('Error updating post: $e');
+            //     }
+            //   },
+            //   child: Text('Update'),
+            // ),
+          ],
+        )
+
       ),
     );
   }
